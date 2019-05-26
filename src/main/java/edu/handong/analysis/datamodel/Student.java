@@ -5,8 +5,8 @@ import java.util.HashMap;
 
 public class Student {
 	private String studentId;
-	private ArrayList<Course> coursesTaken;
-	private HashMap<String,Integer> semestersByYearAndSemester;
+	private ArrayList<Course> coursesTaken = new ArrayList<Course>();
+	private HashMap<String,Integer> semestersByYearAndSemester = new HashMap<String,Integer>() ;
 	
 	public Student(String studentId) {
 		this.studentId =studentId;
@@ -28,7 +28,6 @@ public class Student {
 		/*
 		 * getSemestersByYearAndSemester method는 수강한 년도와 학기 정보를 이용 해당 학생의 순차적인 학기 정보를 저장하는 hashmap을 만듭니다. 
 		*/
-		semestersByYearAndSemester = new HashMap<String,Integer>();
 		int value = 1;
 		boolean first = true;
 		

@@ -104,7 +104,7 @@ public class HGUCoursePatternAnalyzer {
             int maxSemester = semesterByYearAndSemester.size();
 
             for (int i = 1; i <= maxSemester; i++){
-                takenCourses.add(studentId + ", " + maxSemester + ", " + i + ", " + semesterByYearAndSemester.get(i));
+                takenCourses.add(studentId + "," + maxSemester + "," + i + "," + student.getNumCourseInNthSemester(i));
             }
         }
 		return takenCourses; // do not forget to return a proper variable.

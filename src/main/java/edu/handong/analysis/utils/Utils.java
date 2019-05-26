@@ -56,7 +56,7 @@ public class Utils {
 			FileOutputStream fos = new FileOutputStream(file);
 			DataOutputStream dos=new DataOutputStream(fos);
 			
-			dos.writeUTF("StudentID, TotalNumberOfSemestersRegistered, Semester, NumCoursesTakenInTheSemester\n");
+			dos.write("StudentID,TotalNumberOfSemestersRegistered,Semester,NumCoursesTakenInTheSemester\n".getBytes());
 			for(String line:lines){
 				dos.write((line+"\n").getBytes());
 			}
