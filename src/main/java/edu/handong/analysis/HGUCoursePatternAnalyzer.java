@@ -7,8 +7,8 @@ import java.util.TreeMap;
 
 import edu.handong.analysis.datamodel.Course;
 import edu.handong.analysis.datamodel.Student;
-import edu.handong.analysise.utils.NotEnoughArgumentException;
-import edu.handong.analysise.utils.Utils;
+import edu.handong.analysis.utils.NotEnoughArgumentException;
+import edu.handong.analysis.utils.Utils;
 
 public class HGUCoursePatternAnalyzer {
 
@@ -54,9 +54,30 @@ public class HGUCoursePatternAnalyzer {
 	 */
 	private HashMap<String,Student> loadStudentCourseRecords(ArrayList<String> lines) {
 		
-		// TODO: Implement this method
+		HashMap<String,Student> records = new HashMap<String,Student>();
+		String studentId = "";
+		boolean first = true;
 		
-		return null; // do not forget to return a proper variable.
+		for(String line:lines) {
+			Course course = new Course(line);
+			studentId = course.getStudentId();
+			if(first) {
+				Student student = new Student(studentId);
+				student.addCourse(course);
+				records.put(studentId, student);
+				first = false;
+			}
+			
+			if(records.containsKey(studentId))
+				records.get(studentId).addCourse(course);
+			else {
+				Student student = new Student(studentId);
+				student.addCourse(course);
+				records.put(studentId, student);
+			}
+		}
+		
+		return records; // do not forget to return a proper variable.
 	}
 
 	/**
@@ -66,7 +87,7 @@ public class HGUCoursePatternAnalyzer {
      * 0001,14,2,8
 	 * ....
 	 * 
-	 * 0001,14,1,9 => this means, 0001 student registered 14 semeters in total. In the first semeter (1), the student took 9 courses.
+	 * 0001,14,1,9 => this means, 0001 student registered 14 semesters in total. In the first semester (1), the student took 9 courses.
 	 * 
 	 * 
 	 * @param sortedStudents
@@ -74,8 +95,10 @@ public class HGUCoursePatternAnalyzer {
 	 */
 	private ArrayList<String> countNumberOfCoursesTakenInEachSemester(Map<String, Student> sortedStudents) {
 		
-		// TODO: Implement this method
+		ArrayList <String> takenCourses = new ArrayList<String>();
 		
-		return null; // do not forget to return a proper variable.
+		
+		
+		return takenCourses; // do not forget to return a proper variable.
 	}
 }
