@@ -68,7 +68,7 @@ public class HGUCoursePatternAnalyzer {
 				first = false;
 			}
 			
-			if(records.containsKey(studentId))
+			else if(records.containsKey(studentId))
 				records.get(studentId).addCourse(course);
 			else {
 				Student student = new Student(studentId);
@@ -105,7 +105,7 @@ public class HGUCoursePatternAnalyzer {
 
             for (int i = 1; i <= maxSemester; i++){
                 takenCourses.add(studentId + "," + maxSemester + "," + i + "," + student.getNumCourseInNthSemester(i));
-            }
+            } 
         }
 		return takenCourses; // do not forget to return a proper variable.
 	}
