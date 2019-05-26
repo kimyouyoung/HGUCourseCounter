@@ -29,7 +29,19 @@ public class Student {
 		 * getSemestersByYearAndSemester method는 수강한 년도와 학기 정보를 이용 해당 학생의 순차적인 학기 정보를 저장하는 hashmap을 만듭니다. 
 		*/
 		semestersByYearAndSemester = new HashMap<String,Integer>();
-		//String yearAndSemester = 
+		int value = 1;
+		boolean first = true;
+		
+		for(Course course : coursesTaken) {
+			String yearAndSemester = course.getYearTaken() + "-" + course.getSemesterCourseTaken();
+			if(first) {
+				semestersByYearAndSemester.put(yearAndSemester, value++);
+				first = false;
+			}
+			else if(!semestersByYearAndSemester.containsKey(yearAndSemester)) {
+				semestersByYearAndSemester.put(yearAndSemester, value++);
+			}
+		}
 		
 		return semestersByYearAndSemester;
 	}
@@ -42,6 +54,10 @@ public class Student {
 		 * semestersByYearAndSemester에 해당 key값에 해당하는 순차적 학기 번호를 받아와 3이랑 같으면 count를 하나 늘리식으로 논리를 짜면 됩니다.
 		 */
 		int count = 0;
+		for (Course course : coursesTaken){
+			if (course.getSemesterCourseTaken() == semester)
+				count++;
+		}
 		
 		return count;
 	}
