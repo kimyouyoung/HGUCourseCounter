@@ -12,17 +12,16 @@ public class Course {
 	private int semesterCourseTaken;
 	
 	public Course(String line) {
-		String[] array = line.trim().split(",");
 		
-		setStudentId(array[0]);
-		setYearMonthGraduated(array[1]);
-		setFirstMajor(array[2]);
-		setSecondMajor(array[3]);
-		setCourseCode(array[4]);
-		setCourseName(array[5]);
-		setCourseCredit(array[6]);
-		setYearTaken(Integer.parseInt(array[7]));
-		setSemesterCourseTaken(Integer.parseInt(array[8]));
+		setStudentId(line.split(",")[0].trim());
+		setYearMonthGraduated(line.split(",")[1].trim());
+		setFirstMajor(line.split(",")[2].trim());
+		setSecondMajor(line.split(",")[3].trim());
+		setCourseCode(line.split(",")[4].trim());
+		setCourseName(line.split(",")[5].trim());
+		setCourseCredit(line.split(",")[6].trim());
+		setYearTaken(Integer.parseInt(line.split(",")[7].trim()));
+		setSemesterCourseTaken(Integer.parseInt(line.split(",")[8].trim()));
 	}
 
 	public String getStudentId() {

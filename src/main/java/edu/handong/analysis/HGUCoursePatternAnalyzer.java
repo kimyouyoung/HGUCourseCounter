@@ -55,7 +55,7 @@ public class HGUCoursePatternAnalyzer {
 	private HashMap<String,Student> loadStudentCourseRecords(ArrayList<String> lines) {
 		
 		HashMap<String,Student> records = new HashMap<String,Student>();
-		String studentId = "";
+		String studentId;
 		boolean first = true;
 		
 		for(String line:lines) {
