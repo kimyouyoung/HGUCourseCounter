@@ -97,8 +97,16 @@ public class HGUCoursePatternAnalyzer {
 		
 		ArrayList <String> takenCourses = new ArrayList<String>();
 		
-		
-		
+		for (String studentId:sortedStudents.keySet()){
+            Student student = sortedStudents.get(studentId);
+            HashMap<String, Integer> semesterByYearAndSemester = student.getSemestersByYearAndSemester();
+
+            int maxSemester = semesterByYearAndSemester.size();
+
+            for (int i = 1; i <= maxSemester; i++){
+                takenCourses.add(studentId + ", " + maxSemester + ", " + i + ", " + semesterByYearAndSemester.get(i));
+            }
+        }
 		return takenCourses; // do not forget to return a proper variable.
 	}
 }

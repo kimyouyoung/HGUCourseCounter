@@ -54,8 +54,9 @@ public class Student {
 		 * semestersByYearAndSemester에 해당 key값에 해당하는 순차적 학기 번호를 받아와 3이랑 같으면 count를 하나 늘리식으로 논리를 짜면 됩니다.
 		 */
 		int count = 0;
-		for (Course course : coursesTaken){
-			if (course.getSemesterCourseTaken() == semester)
+		for(Course course : coursesTaken) {
+			String yearAndSemester = course.getYearTaken() + "-" + course.getSemesterCourseTaken();
+			if(semestersByYearAndSemester.get(yearAndSemester) == semester)
 				count++;
 		}
 		
