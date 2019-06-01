@@ -3,16 +3,18 @@ package edu.handong.analysis;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
+//import java.util.TreeMap;
+
+import org.apache.commons.csv.CSVRecord;
 
 import edu.handong.analysis.datamodel.Course;
 import edu.handong.analysis.datamodel.Student;
 import edu.handong.analysis.utils.NotEnoughArgumentException;
-import edu.handong.analysis.utils.Utils;
+//import edu.handong.analysis.utils.Utils;
 
 public class HGUCoursePatternAnalyzer {
 
-	private HashMap<String,Student> students;
+	//private HashMap<String,Student> students;
 	
 	/**
 	 * This method runs our analysis logic to save the number courses taken by each student per semester in a result file.
@@ -30,20 +32,21 @@ public class HGUCoursePatternAnalyzer {
 			System.exit(0);
 		}
 		
-		String dataPath = args[0]; // csv file to be analyzed
-		String resultPath = args[1]; // the file path where the results are saved.
-		ArrayList<String> lines = Utils.getLines(dataPath, true);
+		Runner.runner(args);
 		
-		students = loadStudentCourseRecords(lines);
+		//String dataPath = args[0]; // csv file to be analyzed
+		//String resultPath = args[1]; // the file path where the results are saved.
+		//ArrayList<CSVRecord> lines = Utils.getLines(dataPath, true);
+		//students = loadStudentCourseRecords(lines);
 		
 		// To sort HashMap entries by key values so that we can save the results by student ids in ascending order.
-		Map<String, Student> sortedStudents = new TreeMap<String,Student>(students); 
+		//Map<String, Student> sortedStudents = new TreeMap<String,Student>(students); 
 		
 		// Generate result lines to be saved.
-		ArrayList<String> linesToBeSaved = countNumberOfCoursesTakenInEachSemester(sortedStudents);
+		//ArrayList<String> linesToBeSaved = countNumberOfCoursesTakenInEachSemester(sortedStudents);
 		
 		// Write a file (named like the value of resultPath) with linesTobeSaved.
-		Utils.writeAFile(linesToBeSaved, resultPath);
+		//Utils.writeAFile(linesToBeSaved, resultPath);
 	}
 	
 	/**
@@ -52,28 +55,60 @@ public class HGUCoursePatternAnalyzer {
 	 * @param lines
 	 * @return
 	 */
-	private HashMap<String,Student> loadStudentCourseRecords(ArrayList<String> lines) {
+	public static HashMap<String,Student> loadStudentCourseRecords(ArrayList<CSVRecord> lines, int startyear, int endyear) {
 		
 		HashMap<String,Student> records = new HashMap<String,Student>();
 		String studentId;
 		boolean first = true;
 		
-		for(String line:lines) {
+		for(CSVRecord line:lines) {
 			Course course = new Course(line);
-			studentId = course.getStudentId();
-			if(first) {
-				Student student = new Student(studentId);
-				student.addCourse(course);
-				records.put(studentId, student);
-				first = false;
+			if(course.getYearTaken() >= startyear && course.getYearTaken() <= endyear) {
+				studentId = course.getStudentId();
+				if(first) {
+					Student student = new Student(studentId);
+					student.addCourse(course);
+					records.put(studentId, student);
+					first = false;
+				}
+				
+				else if(records.containsKey(studentId))
+					records.get(studentId).addCourse(course);
+				else {
+					Student student = new Student(studentId);
+					student.addCourse(course);
+					records.put(studentId, student);
+				}
 			}
-			
-			else if(records.containsKey(studentId))
-				records.get(studentId).addCourse(course);
-			else {
-				Student student = new Student(studentId);
-				student.addCourse(course);
-				records.put(studentId, student);
+		}
+		
+		return records; // do not forget to return a proper variable.
+	}
+	
+	public static HashMap<String,Student> loadStudentYearAndSemester(ArrayList<CSVRecord> lines, int startyear, int endyear) {
+		
+		HashMap<String,Student> records = new HashMap<String,Student>();
+		String yearAndSemester;
+		boolean first = true;
+		
+		for(CSVRecord line:lines) {
+			Course course = new Course(line);
+			if(course.getYearTaken() >= startyear && course.getYearTaken() <= endyear) {
+				yearAndSemester = course.getYearTaken() + "-" + course.getsemesterTaken();
+				if(first) {
+					Student student = new Student(yearAndSemester);
+					student.addCourse(course);
+					records.put(yearAndSemester, student);
+					first = false;
+				}
+				
+				else if(records.containsKey(yearAndSemester))
+					records.get(yearAndSemester).addCourse(course);
+				else {
+					Student student = new Student(yearAndSemester);
+					student.addCourse(course);
+					records.put(yearAndSemester, student);
+				}
 			}
 		}
 		
@@ -93,7 +128,7 @@ public class HGUCoursePatternAnalyzer {
 	 * @param sortedStudents
 	 * @return
 	 */
-	private ArrayList<String> countNumberOfCoursesTakenInEachSemester(Map<String, Student> sortedStudents) {
+	public static ArrayList<String> countNumberOfCoursesTakenInEachSemester(Map<String, Student> sortedStudents) {
 		
 		ArrayList <String> takenCourses = new ArrayList<String>();
 		
@@ -108,5 +143,30 @@ public class HGUCoursePatternAnalyzer {
             } 
         }
 		return takenCourses; // do not forget to return a proper variable.
+	}
+	
+	public static ArrayList<String> countStudentsOfCoursesTaken(Map<String, Student> sortedYearsAndSemester, String courseCode) {
+		
+		ArrayList <String> studentTaken = new ArrayList<String>();
+		String name = "";
+		
+		for (String yearAndSemester:sortedYearsAndSemester.keySet()){
+            Student student = sortedYearsAndSemester.get(yearAndSemester);
+            //HashMap<String, String> totalStudentEachsemester = 
+
+            int totalStudents = student.getTotalStudent(yearAndSemester);
+            int takenStudents = student.getTakenStudents(yearAndSemester, courseCode);
+            float rate = (takenStudents/(float)totalStudents) * 100;
+            int year = student.getYear(yearAndSemester);
+            int semester = student.getSemester(yearAndSemester);
+            String courseName = student.getCourseName(courseCode);
+            if(courseName.equals(""))
+            	courseName = name;
+            else
+            	name = courseName;
+
+            studentTaken.add(year+ "," + semester + "," + courseCode + "," + courseName + "," + totalStudents + "," + takenStudents + "," + rate);
+        }
+		return studentTaken; // do not forget to return a proper variable.
 	}
 }

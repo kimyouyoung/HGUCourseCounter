@@ -1,5 +1,7 @@
 package edu.handong.analysis.datamodel;
 
+import org.apache.commons.csv.CSVRecord;
+
 public class Course {
 	private String studentId;
 	private String yearMonthGraduated;
@@ -9,19 +11,20 @@ public class Course {
 	private String courseName;
 	private String courseCredit;
 	private int yearTaken;
-	private int semesterCourseTaken;
+	private int semesterTaken;
 	
-	public Course(String line) {
+	public Course(CSVRecord line) {
 		
-		setStudentId(line.split(",")[0].trim());
-		setYearMonthGraduated(line.split(",")[1].trim());
-		setFirstMajor(line.split(",")[2].trim());
-		setSecondMajor(line.split(",")[3].trim());
-		setCourseCode(line.split(",")[4].trim());
-		setCourseName(line.split(",")[5].trim());
-		setCourseCredit(line.split(",")[6].trim());
-		setYearTaken(Integer.parseInt(line.split(",")[7].trim()));
-		setSemesterCourseTaken(Integer.parseInt(line.split(",")[8].trim()));
+		setStudentId(line.get(0));
+		setYearMonthGraduated(line.get(1));
+		setFirstMajor(line.get(2));
+		setSecondMajor(line.get(3));
+		setCourseCode(line.get(4));
+		setCourseName(line.get(5));
+		setCourseCredit(line.get(6));
+		setYearTaken(Integer.parseInt(line.get(7)));
+		setsemesterTaken(Integer.parseInt(line.get(8)));
+		
 	}
 
 	public String getStudentId() {
@@ -88,11 +91,11 @@ public class Course {
 		this.yearTaken = yearTaken;
 	}
 
-	public int getSemesterCourseTaken() {
-		return semesterCourseTaken;
+	public int getsemesterTaken() {
+		return semesterTaken;
 	}
 
-	public void setSemesterCourseTaken(int semesterCourseTaken) {
-		this.semesterCourseTaken = semesterCourseTaken;
+	public void setsemesterTaken(int semesterTaken) {
+		this.semesterTaken = semesterTaken;
 	}
 }
