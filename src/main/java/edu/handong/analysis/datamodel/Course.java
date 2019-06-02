@@ -15,15 +15,15 @@ public class Course {
 	
 	public Course(CSVRecord line) {
 		
-		setStudentId(line.get(0));
-		setYearMonthGraduated(line.get(1));
-		setFirstMajor(line.get(2));
-		setSecondMajor(line.get(3));
-		setCourseCode(line.get(4));
-		setCourseName(line.get(5));
-		setCourseCredit(line.get(6));
-		setYearTaken(Integer.parseInt(line.get(7)));
-		setsemesterTaken(Integer.parseInt(line.get(8)));
+		setStudentId(line.get(0).trim());
+		setYearMonthGraduated(line.get(1).trim());
+		setFirstMajor(line.get(2).trim());
+		setSecondMajor(line.get(3).trim());
+		setCourseCode(line.get(4).trim());
+		setCourseName(line.get(5).trim());
+		setCourseCredit(line.get(6).trim());
+		setYearTaken(Integer.parseInt(line.get(7).trim()));
+		setsemesterTaken(Integer.parseInt(line.get(8).trim()));
 		
 	}
 
