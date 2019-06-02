@@ -152,20 +152,23 @@ public class HGUCoursePatternAnalyzer {
 		
 		for (String yearAndSemester:sortedYearsAndSemester.keySet()){
             Student student = sortedYearsAndSemester.get(yearAndSemester);
-            //HashMap<String, String> totalStudentEachsemester = 
-
+            String courseName = student.getCourseName(courseCode);
+            if(!courseName.equals("")) {
+            	name = courseName;
+            	break;
+            }
+		}
+		
+		for (String yearAndSemester:sortedYearsAndSemester.keySet()){
+            Student student = sortedYearsAndSemester.get(yearAndSemester);
+            
             int totalStudents = student.getTotalStudent(yearAndSemester);
             int takenStudents = student.getTakenStudents(yearAndSemester, courseCode);
             float rate = (takenStudents/(float)totalStudents) * 100;
             int year = student.getYear(yearAndSemester);
             int semester = student.getSemester(yearAndSemester);
-            String courseName = student.getCourseName(courseCode);
-            if(courseName.equals(""))
-            	courseName = name;
-            else
-            	name = courseName;
-
-            studentTaken.add(year+ "," + semester + "," + courseCode + "," + courseName + "," + totalStudents + "," + takenStudents + "," + rate);
+         
+            studentTaken.add(year+ "," + semester + "," + courseCode + "," + name + "," + totalStudents + "," + takenStudents + "," + String.format("%.1f", rate) + "%");
         }
 		return studentTaken; // do not forget to return a proper variable.
 	}

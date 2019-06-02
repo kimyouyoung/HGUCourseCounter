@@ -81,8 +81,8 @@ public class Utils {
 			FileOutputStream fos = new FileOutputStream(file);
 			DataOutputStream dos=new DataOutputStream(fos);
 			
-			dos.write("Year,Semester,CourseCode,CourseName,TotalStudent\n".getBytes());
-			System.out.println("Year,Semester,CourseCode,CourseName,TotalStudent\n");
+			dos.write("Year,Semester,CourseCode,CourseName,TotalStudent,StudentsTaken,Rate\n".getBytes());
+			System.out.println("Year,Semester,CourseCode,CourseName,TotalStudent,StudentsTaken,Rate\n");
 			for(String line:lines){
 				dos.write((line+"\n").getBytes());
 				System.out.println(line+"\n");
