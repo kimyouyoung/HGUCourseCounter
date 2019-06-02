@@ -7,7 +7,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-//import java.util.Iterator;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -28,7 +27,6 @@ public class Utils {
 			FileReader data = new FileReader(csvData);
 			CSVParser parser = CSVParser.parse(data, CSVFormat.EXCEL.withIgnoreSurroundingSpaces().withTrim());
 			
-			//Iterator<CSVRecord> iterator = parser.iterator();
 			//BufferedReader br = new BufferedReader(new FileReader(file));
 			/*(while ((thisLine = br.readLine()) != null) { 
 				lines.add(thisLine);
@@ -37,6 +35,7 @@ public class Utils {
 			*/
 			for(CSVRecord csvRecord:parser)
 				lines.add(csvRecord);
+			
 		}catch (NotEnoughArgumentException e) {
 			System.out.println(e.getMessage());
 			System.exit(0);
